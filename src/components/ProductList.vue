@@ -16,28 +16,48 @@
     </div>
 </template>
 <script>
+import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
     data () {
         return {
             loading: false
         }
     },
+    //  ? Alternative way using Vuex Map Helpers
     computed: {
-        products () {
-            return this.$store.state.products
-        },
-        productsInStock(){
-            return this.$store.getters.productsInStock
-        }
+        ...mapState({
+            products: state => state.products
+        }),
+
+        ...mapGetters({
+            productsInStock: 'productsInStock'
+        })
     },
     methods: {
-        addProductToCart (product) {
-            this.$store.dispatch('addProductToCart', product)
-        }
+        ...mapActions({
+            fetchProducts: 'fetchProducts',
+            addProductToCart: 'addProductToCart'
+        })
     },
+
+    // ? Alternative way with out using Vuex Map Helpers
+    // computed: {
+    //     products () {
+    //         return this.$store.state.products
+    //     },
+    //     productsInStock(){
+    //         return this.$store.getters.productsInStock
+    //     }
+    // },
+    // methods: {
+    //     addProductToCart (product) {
+    //         this.$store.dispatch('addProductToCart', product)
+    //     }
+    // },
     created () {
         this.loading = true
-        this.$store.dispatch('fetchProducts')
+        this.fetchProducts()
+        //this.$store.dispatch('fetchProducts')
         .then(() => this.loading = false)
     }
 }

@@ -7,20 +7,39 @@
             </li>
         </ul>
         <p>Total: {{cartTotal | currency}}</p>
-        <button @click="$store.dispatch('checkout')">Checkout</button>
-        <p v-if="$store.state.checkoutStatus">{{$store.state.checkoutStatus}}</p>
+        <button @click="'checkout'">Checkout</button>
+        <p v-if="checkoutStatus">{{checkoutStatus}}</p>
     </div>
 </template>
 <script>
+import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
+
+    //  ? Alternative way using Vuex Map Helpers
     computed: {
-        products () {
-            return this.$store.getters.cartProducts
-        },
-         cartTotal () {
-            return this.$store.getters.cartTotal
-        }
+        ...mapState({
+            checkoutStatus: 'checkoutStatus'
+        }),
+
+        ...mapGetters({
+            products: 'cartProducts',
+            cartTotal: 'cartTotal'
+        })
     },
-    
+    methods: {
+        ...mapActions(['checkout'])
+    }
+    // ? Alternative way with out using Vuex Map Helpers
+    // computed: {
+    //     products () {
+    //         return this.$store.getters.cartProducts
+    //     },
+    //      cartTotal () {
+    //         return this.$store.getters.cartTotal
+    //     }
+    // },
+    // ! NB: Change the v-if statement to $store.state.checkoutStatus
+    // ! NB Change p tags data to {{$store.state.checkoutStatus}}
+    // ! NB Change button @click to $store.dispatch('checkout')
 }
 </script>
