@@ -26,7 +26,7 @@ export default {
     //  ? Alternative way using Vuex Map Helpers
     computed: {
         ...mapState({
-            products: state => state.products
+            products: state => state.products.items
         }),
 
         ...mapGetters({
