@@ -18,17 +18,17 @@ export default {
     //  ? Alternative way using Vuex Map Helpers
     computed: {
 
-        ...mapGetters({
+        ...mapGetters('cart',{
             products: 'cartProducts',
             cartTotal: 'cartTotal'
         }),
         
-        ...mapState({
-            checkoutStatus: state => state.cart.checkoutStatus
+        ...mapState('cart',{
+            checkoutStatus: state => state.checkoutStatus
         }),
     },
     methods: {
-        ...mapActions(['checkout'])
+        ...mapActions('cart',['checkout'])
     }
     // ? Alternative way with out using Vuex Map Helpers
     // computed: {
